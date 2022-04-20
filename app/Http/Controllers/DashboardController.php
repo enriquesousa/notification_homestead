@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\User;
+
 class DashboardController extends Controller
 {
+    
     public function index(){
-        return view('dashboard');
+        // Traerme todos los usuarios que sean diferente al autenticado
+        $users = User::where('id', '<>', auth()->user()->id)->get();
+        return view('dashboard', compact('users'));
     }
+
 }
