@@ -17,7 +17,23 @@ class MessageController extends Controller
     // Guardar los Mensajes
     // Usar Request $request para recibir los datos desde un formulario
     public function store(Request $request){
+        $request->validate([
+            'subject' => 'required|min:10',
+            'body' => 'required|min:10',
+            'to_user_id' => 'required|exists:users,id',
+        ]);
 
+        Message::create([
+            'subject' => $request->subject,
+            'body' => $request->body,
+            'from_user_id' => auth()->id(),
+            'to_user_id' => $request->to_user_id,
+        ]);
+
+        $request->session()->flash('flash.banner', 'tu mensaje fue enviado');
+        $request->session()->flash('flash.bannerStyle', 'success');
+
+        return redirect()->back();
     }
 
 }
