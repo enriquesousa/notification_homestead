@@ -30,6 +30,7 @@ class MessageController extends Controller
             'to_user_id' => $request->to_user_id,
         ]);
 
+        // Este banner funciona gracias a que en resources/views/layouts/app.blade.php tenemos <x-jet-banner /> encabezando la pagina del body!, usamos variable de sesión
         $request->session()->flash('flash.banner', 'tu mensaje fue enviado');
         $request->session()->flash('flash.bannerStyle', 'success');
 
