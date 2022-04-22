@@ -41,6 +41,7 @@ class MessageSent extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->error()
                     ->subject('Tienes un nuevo mensaje')
                     ->greeting('Hola Coders')
                     ->line('Para leer tu mensaje haz click en el botón.')
