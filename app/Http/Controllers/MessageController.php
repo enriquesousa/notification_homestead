@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Message;
+use App\Models\User;
+use App\Notifications\MessageSent;
 
 class MessageController extends Controller
 {
@@ -23,12 +25,16 @@ class MessageController extends Controller
             'to_user_id' => 'required|exists:users,id',
         ]);
 
-        Message::create([
+        $message = Message::create([
             'subject' => $request->subject,
             'body' => $request->body,
             'from_user_id' => auth()->id(),
             'to_user_id' => $request->to_user_id,
         ]);
+
+        $user = User::find($request->to_user_id);
+        // lo mandamos el $message por el método constructor
+        $user->notify(new MessageSent($message));
 
         // Este banner funciona gracias a que en resources/views/layouts/app.blade.php tenemos <x-jet-banner /> encabezando la pagina del body!, usamos variable de sesión
         $request->session()->flash('flash.banner', 'tu mensaje fue enviado');
