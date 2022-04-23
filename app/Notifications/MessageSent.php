@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,14 +12,16 @@ class MessageSent extends Notification
 {
     use Queueable;
 
+    public $message;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(public $message)
+    public function __construct(Message $message)
     {
-
+        $this->message = $message;
     }
 
     /**
@@ -41,12 +44,8 @@ class MessageSent extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->error()
                     ->subject('Tienes un nuevo mensaje')
-                    ->greeting('Hola Coders')
-                    ->line('Para leer tu mensaje haz click en el botón.')
-                    ->action('Ver mensaje', route('messages.show', $this->message->id))
-                    ->line('Hasta luego!');
+                    ->markdown('mail.message', ['message' => $this->message]);
     }
 
     /**
