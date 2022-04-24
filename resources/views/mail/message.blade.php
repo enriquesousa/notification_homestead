@@ -1,25 +1,13 @@
-@component('mail::message')
-    
-# Hola ESWebers
-Para leer el mensaje, haz click en el botón
-
-{{-- para mostrar mensaje que escribió el usuario --}}
-@component('mail::panel')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hola como estas?</h1>
     {{ $message->body }}
-@endcomponent
-
-@component('mail::button', ['url' => route('messages.show', $message)])
-    Ver mensaje
-@endcomponent
-
-
-Hasta luego!
-
-Regards,
-ESWeb
-
-@component('mail::subcopy')
-If you're having trouble clicking the "Ver mensaje" button, copy and paste the URL below into your web browser: <a href="{{ route('messages.show', $message) }}">{{ route('messages.show', $message) }}</a>
-@endcomponent
-
-@endcomponent
+</body>
+</html>
