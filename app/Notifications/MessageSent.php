@@ -59,7 +59,7 @@ class MessageSent extends Notification implements ShouldQueue
     {
         return [
             'url' => route('messages.show', $this->message->id),
-            'message' => 'Has recibido un mensaje de' . User::find($this->message->from_user_id)->name 
+            'message' => 'Has recibido un mensaje de ' . User::find($this->message->from_user_id)->name 
         ];
     }
 }
