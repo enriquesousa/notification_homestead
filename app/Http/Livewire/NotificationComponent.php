@@ -13,6 +13,16 @@ class NotificationComponent extends Component
         $this->count = auth()->user()->unreadNotifications->count();
     }
 
+    public function resetNotificationCount(){
+        auth()->user()->notification = 0;
+        auth()->user()->save();
+    }
+
+    public function read($notification_id){
+        $notification = auth()->user()->notifications()->findOrFail($notification_id);
+        $notification->markAsRead();
+    }
+
     public function render()
     {
         return view('livewire.notification-component');
